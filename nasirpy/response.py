@@ -38,6 +38,7 @@ class Response:
     ):
         self.status_code = status_code
         self.headers = CaseInsensitiveDict(headers or {})
+        self._json = None
         
         # Handle different content types
         if isinstance(content, bytes):
@@ -45,6 +46,7 @@ class Response:
             if "content-type" not in self.headers:
                 self.headers["content-type"] = "application/octet-stream"
         elif isinstance(content, dict):
+            self._json = content  # Store JSON directly if dict
             self.body = json.dumps(content).encode()
             if "content-type" not in self.headers:
                 self.headers["content-type"] = "application/json"
@@ -53,6 +55,15 @@ class Response:
             if "content-type" not in self.headers:
                 self.headers["content-type"] = "text/plain"
     
+    async def json(self) -> Dict:
+        """Get the response content as JSON."""
+        if self._json is not None:
+            return self._json
+        if "application/json" not in self.headers.get("content-type", "").lower():
+            raise ValueError("Response content type is not JSON")
+        self._json = json.loads(self.body.decode())
+        return self._json
+
     async def send(self, send: Any):
         await send({
             "type": "http.response.start",
