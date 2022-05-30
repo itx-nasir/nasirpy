@@ -1,10 +1,11 @@
-from typing import Callable, Dict, List, Optional, Union
+from typing import Callable, Dict, List, Optional, Union, Tuple
 from .request import Request
 from .response import Response
+from .utils import match_route
 
 class App:
     def __init__(self):
-        self.routes: Dict[str, Dict[str, Callable]] = {}
+        self.routes: List[Tuple[str, Dict[str, Callable]]] = []
         self.middleware: List[Callable] = []
         
     async def __call__(self, scope: dict, receive: Callable, send: Callable) -> None:
@@ -28,11 +29,14 @@ class App:
         """
         Dispatch the request to the appropriate handler
         """
-        handler = self._get_handler(request.path, request.method)
+        handler, params = self._get_handler(request.path, request.method)
         if handler is None:
             return Response({"error": "Not Found"}, status_code=404)
             
         try:
+            # Add path parameters to request
+            request.path_params = params or {}
+            
             # Run through middleware chain
             for middleware in self.middleware:
                 request = await middleware(request)
@@ -42,23 +46,23 @@ class App:
         except Exception as e:
             return Response({"error": str(e)}, status_code=500)
     
-    def _get_handler(self, path: str, method: str) -> Optional[Callable]:
+    def _get_handler(self, path: str, method: str) -> Tuple[Optional[Callable], Optional[Dict[str, str]]]:
         """
-        Get the handler function for a given path and method
+        Get the handler function and extracted parameters for a given path and method
         """
-        if path in self.routes and method in self.routes[path]:
-            return self.routes[path][method]
-        return None
+        for route_pattern, methods in self.routes:
+            params = match_route(route_pattern, path)
+            if params is not None and method in methods:
+                return methods[method], params
+        return None, None
     
     def route(self, path: str, methods: List[str] = ["GET"]):
         """
         Route decorator for registering handlers
         """
         def decorator(handler: Callable):
-            if path not in self.routes:
-                self.routes[path] = {}
-            for method in methods:
-                self.routes[path][method.upper()] = handler
+            method_dict = {method.upper(): handler for method in methods}
+            self.routes.append((path, method_dict))
             return handler
         return decorator
     
