@@ -7,6 +7,12 @@ class App:
         self.routes: Dict[str, Dict[str, Callable]] = {}
         self.middleware: List[Callable] = []
         
+    async def __call__(self, scope: dict, receive: Callable, send: Callable) -> None:
+        """
+        ASGI callable
+        """
+        await self.handle_request(scope, receive, send)
+    
     async def handle_request(self, scope: dict, receive: Callable, send: Callable) -> None:
         """
         ASGI application handler
