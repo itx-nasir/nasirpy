@@ -1,7 +1,13 @@
 from nasirpy import App, Response, Router
+from nasirpy import LoggingMiddleware, TimingMiddleware, CORSMiddleware
 from nasirpy.exceptions import NotFoundError, BadRequestError
 
 app = App()
+
+# Add middleware to the app
+app.add_middleware(CORSMiddleware())
+app.add_middleware(LoggingMiddleware())
+app.add_middleware(TimingMiddleware())
 
 # Create an API router with prefix
 api = Router(prefix="/api/v1")
