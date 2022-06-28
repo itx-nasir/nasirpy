@@ -1,11 +1,19 @@
 from typing import Callable, Dict, List, Optional, Tuple, Union
 from .response import Response
+import re
 
 class Router:
     def __init__(self, prefix: str = ""):
-        self.prefix = prefix
+        self.prefix = self._normalize_prefix(prefix)
         self.routes: List[Tuple[str, Dict[str, Callable]]] = []
         self.middleware: List[Callable] = []
+
+    def _normalize_prefix(self, prefix: str) -> str:
+        """Normalize the prefix to start with / and not end with /"""
+        if not prefix:
+            return ""
+        prefix = "/" + prefix.strip("/")
+        return prefix
 
     def route(self, path: str, methods: List[str] = ["GET"]):
         """Route decorator for registering handlers"""
@@ -52,3 +60,31 @@ class Router:
         
         # Add middleware from included router
         self.middleware.extend(router.middleware)
+
+    def _extract_params(self, route_pattern: str, path: str) -> Optional[Dict[str, str]]:
+        """Extract parameters from the path based on the route pattern."""
+        # Convert route pattern to regex pattern
+        pattern = re.sub(r'{([^:}]+)(?::([^}]+))?}', r'(?P<\1>[^/]+)', route_pattern)
+        pattern = f'^{pattern}$'
+        
+        # Try to match the path
+        match = re.match(pattern, path)
+        if match:
+            return match.groupdict()
+        return None
+
+    def match_route(self, method: str, path: str) -> Tuple[Optional[Callable], Dict[str, str]]:
+        """Match a path and method to a route handler and extract parameters."""
+        method = method.upper()
+        
+        for route_path, methods in self.routes:
+            # Check if the route supports the method
+            if method not in methods:
+                continue
+                
+            # Try to extract parameters
+            params = self._extract_params(route_path, path)
+            if params is not None:
+                return methods[method], params
+        
+        return None, {}
