@@ -1,6 +1,34 @@
 from typing import Any, Dict, Optional, Union
 import json
 
+class CaseInsensitiveDict(dict):
+    """Dictionary subclass that uses lowercase keys for case-insensitive lookups."""
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._convert_keys()
+    
+    def __getitem__(self, key: str) -> str:
+        return super().__getitem__(key.lower())
+    
+    def __setitem__(self, key: str, value: str) -> None:
+        super().__setitem__(key.lower(), value)
+    
+    def __delitem__(self, key: str) -> None:
+        super().__delitem__(key.lower())
+    
+    def __contains__(self, key: str) -> bool:
+        return super().__contains__(key.lower())
+    
+    def get(self, key: str, default=None):
+        return super().get(key.lower(), default)
+    
+    def _convert_keys(self):
+        """Convert all keys to lowercase."""
+        for k in list(self.keys()):
+            v = super().pop(k)
+            self.__setitem__(k, v)
+
 class Response:
     def __init__(
         self,
@@ -9,18 +37,21 @@ class Response:
         headers: Optional[Dict[str, str]] = None
     ):
         self.status_code = status_code
-        self.headers = headers or {}
+        self.headers = CaseInsensitiveDict(headers or {})
         
         # Handle different content types
         if isinstance(content, bytes):
             self.body = content
-            self.headers.setdefault("content-type", "application/octet-stream")
+            if "content-type" not in self.headers:
+                self.headers["content-type"] = "application/octet-stream"
         elif isinstance(content, dict):
             self.body = json.dumps(content).encode()
-            self.headers.setdefault("content-type", "application/json")
+            if "content-type" not in self.headers:
+                self.headers["content-type"] = "application/json"
         else:
             self.body = str(content).encode()
-            self.headers.setdefault("content-type", "text/plain")
+            if "content-type" not in self.headers:
+                self.headers["content-type"] = "text/plain"
     
     async def send(self, send: Any):
         await send({
