@@ -5,7 +5,7 @@ setup(
     version="0.1.0",
     author="Nasir",
     author_email="Nasir.Iqbal.Dev@gmail.com",
-    description="A Python framework",
+    description="A Python framework for learning how web frameworks work",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/itx-nasir/nasirpy",
