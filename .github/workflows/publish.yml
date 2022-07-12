@@ -1,15 +1,14 @@
-name: Publish to GitHub Packages
+name: Build and Test Package
 
 on:
   release:
     types: [created]
+  push:
+    branches: [master]
 
 jobs:
-  build-and-publish:
+  build-and-test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
       
@@ -26,9 +25,13 @@ jobs:
       - name: Build package
         run: python -m build
       
-      - name: Publish to GitHub Packages
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Test installation
+        run: |
+          pip install .
+          python -c "import nasirpy; print('✅ Package installed successfully!')"
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
         with:
-          repository-url: https://github.com/${{ github.repository }}/packages
-          password: ${{ secrets.GITHUB_TOKEN }}
-          skip-existing: true 
+          name: package-artifacts
+          path: dist/ 
