@@ -82,8 +82,19 @@ This framework is accompanied by detailed explanations of:
 
 ### Installation
 
+Since this is a learning project, you can install it directly from GitHub:
+
 ```bash
-pip install nasirpy
+# Install latest version from main branch
+pip install git+https://github.com/itx-nasir/nasirpy.git
+
+# Install a specific release version
+pip install git+https://github.com/itx-nasir/nasirpy.git@v0.1.0
+
+# Install in development mode (if you want to modify the code)
+git clone https://github.com/itx-nasir/nasirpy.git
+cd nasirpy
+pip install -e .
 ```
 
 ### Basic Usage
