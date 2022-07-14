@@ -1,6 +1,6 @@
 # 🚀 NasirPy
 
-[![GitHub release](https://img.shields.io/github/v/release//nasirpy?include_prereleases&style=flat-square)](https://github.com/itx-nasir/nasirpy/releases)
+[![GitHub release](https://img.shields.io/github/v/release/itx-nasir/nasirpy?include_prereleases&style=flat-square)](https://github.com/itx-nasir/nasirpy/releases)
 [![License](https://img.shields.io/github/license/itx-nasir/nasirpy?style=flat-square)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 
