@@ -146,7 +146,7 @@ If you found this educational project helpful, please give it a star! ⭐️
 
 Have questions about how something works?
 - GitHub: [@itx-nasir](https://github.com/itx-nasir)
-- Email: your.email@example.com
+- Email: Nasir.Iqbal.Dev@gmail.com
 
 ---
 
