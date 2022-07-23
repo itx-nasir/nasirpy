@@ -3,13 +3,13 @@ name: Deploy Documentation
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'docs/**'
       - '.github/workflows/docs.yml'
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - 'docs/**'
 
@@ -46,17 +46,17 @@ jobs:
           mkdocs build --strict
 
       - name: Setup Pages
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         uses: actions/configure-pages@v3
 
       - name: Upload artifact
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v2
         with:
           path: docs/site
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
