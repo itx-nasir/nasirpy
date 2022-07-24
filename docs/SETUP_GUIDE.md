@@ -52,7 +52,7 @@ docs/
    ```bash
    git add docs/ .github/workflows/docs.yml
    git commit -m "Add documentation site"
-   git push origin main
+   git push origin master
    ```
 
 2. **Check the deployment**:
