@@ -5,7 +5,7 @@ site_url: https://itx-nasir.github.io/nasirpy
 
 repo_name: itx-nasir/nasirpy
 repo_url: https://github.com/itx-nasir/nasirpy
-edit_uri: edit/main/docs/
+edit_uri: edit/master/docs/
 
 theme:
   name: material
