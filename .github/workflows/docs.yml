@@ -43,7 +43,7 @@ jobs:
       - name: Build documentation
         run: |
           cd docs
-          mkdocs build --strict
+          mkdocs build
 
       - name: Setup Pages
         if: github.ref == 'refs/heads/master'
