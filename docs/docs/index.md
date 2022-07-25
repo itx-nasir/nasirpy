@@ -3,7 +3,7 @@
 <div align="center">
 
 [![GitHub release](https://img.shields.io/github/v/release/itx-nasir/nasirpy?include_prereleases&style=flat-square)](https://github.com/itx-nasir/nasirpy/releases)
-[![License](https://img.shields.io/github/license/itx-nasir/nasirpy?style=flat-square)](https://github.com/itx-nasir/nasirpy/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/itx-nasir/nasirpy?style=flat-square)](https://github.com/itx-nasir/nasirpy/blob/master/LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 
 **Educational Python web framework built from scratch to understand how web frameworks work under the hood**
@@ -168,7 +168,7 @@ This is an educational project! Contributions are welcome:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/itx-nasir/nasirpy/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/itx-nasir/nasirpy/blob/master/LICENSE) file for details.
 
 ---
 
