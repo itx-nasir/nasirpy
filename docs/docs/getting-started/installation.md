@@ -202,8 +202,8 @@ If you encounter issues:
 Now that NasirPy is installed:
 
 1. **[Quick Start Guide](quickstart.md)** - Build your first API in 5 minutes
-2. **[Your First App](first-app.md)** - Create a complete application
-3. **[Core Concepts](../concepts/architecture.md)** - Understand how it works
+2. **[View Examples](https://github.com/itx-nasir/nasirpy/tree/master/examples)** - See real applications
+3. **[Explore the Code](https://github.com/itx-nasir/nasirpy)** - Understand how it works
 
 ---
 
