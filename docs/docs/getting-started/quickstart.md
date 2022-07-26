@@ -191,29 +191,29 @@ Congratulations! You've built your first NasirPy application. Here's what to exp
 
 <div class="grid cards" markdown>
 
--   **[Your First App](first-app.md)**
+-   **[Explore Examples](https://github.com/itx-nasir/nasirpy/tree/master/examples)**
 
     ---
 
-    Build a more complete application with advanced features
+    See more real-world applications and use cases
 
--   **[Core Concepts](../concepts/architecture.md)**
+-   **[Read the Source Code](https://github.com/itx-nasir/nasirpy)**
 
     ---
 
     Understand how NasirPy works under the hood
 
--   **[API Reference](../api/app.md)**
+-   **[Join the Community](https://github.com/itx-nasir/nasirpy/discussions)**
 
     ---
 
-    Explore all available classes and methods
+    Ask questions and share your learning experience
 
--   **[Examples](../examples/basic-api.md)**
+-   **[Contribute](https://github.com/itx-nasir/nasirpy/issues)**
 
     ---
 
-    See more real-world applications
+    Help improve the framework and documentation
 
 </div>
 
