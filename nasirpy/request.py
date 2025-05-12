@@ -6,6 +6,7 @@ class Request:
         self.scope = scope
         self.receive = receive
         self._body: Optional[bytes] = None
+        self.path_params: Dict[str, str] = {}
         
     @property
     def method(self) -> str:
