@@ -53,10 +53,10 @@ class MiddlewareManager:
             
             # Call middleware
             if isinstance(middleware, BaseMiddleware):
-                return await middleware(request, call_next)
+                return await middleware(request, lambda: call_next())
             else:
                 # Function-based middleware
-                return await middleware(request, call_next)
+                return await middleware(request, lambda: call_next())
         
         return await create_chain()
 
@@ -83,7 +83,7 @@ class CORSMiddleware(BaseMiddleware):
         if request.method == "OPTIONS":
             response = Response({}, status_code=200)
         else:
-            response = await call_next()
+            response = await call_next(request)
         
         # Add CORS headers
         origin = request.headers.get("origin")
@@ -123,7 +123,7 @@ class LoggingMiddleware(BaseMiddleware):
         )
         
         # Process request
-        response = await call_next()
+        response = await call_next(request)
         
         # Calculate processing time
         process_time = time.time() - start_time
@@ -144,7 +144,7 @@ class TimingMiddleware(BaseMiddleware):
     
     async def __call__(self, request: Request, call_next: Callable) -> Response:
         start_time = time.time()
-        response = await call_next()
+        response = await call_next(request)
         process_time = time.time() - start_time
         
         response.headers["X-Process-Time"] = f"{process_time:.3f}"
@@ -165,7 +165,7 @@ class SecurityHeadersMiddleware(BaseMiddleware):
             self.security_headers.update(custom_headers)
     
     async def __call__(self, request: Request, call_next: Callable) -> Response:
-        response = await call_next()
+        response = await call_next(request)
         
         # Add security headers
         for header, value in self.security_headers.items():
@@ -223,7 +223,7 @@ class RateLimitMiddleware(BaseMiddleware):
         # Add current request
         self.clients[client_ip].append(current_time)
         
-        response = await call_next()
+        response = await call_next(request)
         
         # Add rate limit headers
         remaining = max(0, self.max_requests - len(self.clients[client_ip]))
@@ -242,7 +242,7 @@ def create_auth_middleware(auth_checker: Callable[[Request], bool]) -> Callable:
         if not await auth_checker(request):
             from .exceptions import HTTPException
             raise HTTPException(status_code=401, detail="Authentication required")
-        return await call_next()
+        return await call_next(request)
     
     return auth_middleware
 
@@ -256,7 +256,7 @@ def create_custom_middleware(before_handler: Optional[Callable] = None,
             await before_handler(request)
         
         # Process request
-        response = await call_next()
+        response = await call_next(request)
         
         # After request processing
         if after_handler:
