@@ -2,13 +2,15 @@ from typing import Callable, Dict, List, Optional, Union, Tuple
 from .request import Request
 from .response import Response
 from .utils import match_route
-from .exceptions import HTTPException
+from .exceptions import HTTPException, NotFoundError
 from .router import Router
+from .middleware import MiddlewareManager, BaseMiddleware
 
 class App(Router):
     def __init__(self):
         super().__init__()
         self.routers: List[Router] = []
+        self.middleware_manager = MiddlewareManager()
         
     async def __call__(self, scope: dict, receive: Callable, send: Callable) -> None:
         """
@@ -29,19 +31,22 @@ class App(Router):
     
     async def _dispatch(self, request: Request) -> Response:
         """
-        Dispatch the request to the appropriate handler
+        Dispatch the request to the appropriate handler through middleware
         """
         try:
             handler, params = self._get_handler(request.path, request.method)
             if handler is None:
-                raise NotFoundError(f"No route found for {request.path}")
+                raise NotFoundError(f"No route found for {request.method} {request.path}")
 
+            # Set path parameters
             request.path_params = params or {}
             
-            for middleware in self.middleware:
-                request = await middleware(request)
-                
-            response = await handler(request)
+            # Create the final handler that includes the route handler
+            async def final_handler(req: Request) -> Response:
+                return await handler(req)
+            
+            # Process through middleware chain
+            response = await self.middleware_manager.process_request(request, final_handler)
             return response
             
         except HTTPException as e:
@@ -102,3 +107,32 @@ class App(Router):
         if prefix:
             router.prefix = prefix + router.prefix
         self.routers.append(router)
+    
+    # Middleware management methods
+    def add_middleware(self, middleware: Union[BaseMiddleware, Callable]) -> None:
+        """
+        Add middleware to the application
+        
+        Args:
+            middleware: Either a BaseMiddleware instance or a callable
+        """
+        self.middleware_manager.add_middleware(middleware)
+    
+    def middleware(self, middleware_class: Union[BaseMiddleware, Callable]):
+        """
+        Decorator for adding middleware
+        
+        Usage:
+            @app.middleware
+            class MyMiddleware(BaseMiddleware):
+                async def __call__(self, request, call_next):
+                    # middleware logic
+                    return await call_next()
+        """
+        if isinstance(middleware_class, type):
+            # If it's a class, instantiate it
+            self.add_middleware(middleware_class())
+        else:
+            # If it's already an instance or function, use directly
+            self.add_middleware(middleware_class)
+        return middleware_class
