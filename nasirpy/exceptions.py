@@ -1,7 +1,7 @@
 class HTTPException(Exception):
     def __init__(self, status_code: int, detail: str = None):
         self.status_code = status_code
-        self.detail = detail or self._get_default_detail(status_code)
+        self.detail = detail if detail is not None else self._get_default_detail(status_code)
 
     def _get_default_detail(self, status_code: int) -> str:
         return {

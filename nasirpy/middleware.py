@@ -48,15 +48,15 @@ class MiddlewareManager:
             
             middleware = self.middleware_stack[index]
             
-            async def call_next():
+            async def call_next(req: Request = None):
                 return await create_chain(index + 1)
             
             # Call middleware
             if isinstance(middleware, BaseMiddleware):
-                return await middleware(request, lambda: call_next())
+                return await middleware(request, call_next)
             else:
                 # Function-based middleware
-                return await middleware(request, lambda: call_next())
+                return await middleware(request, call_next)
         
         return await create_chain()
 
