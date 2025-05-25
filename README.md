@@ -1,7 +1,7 @@
 # 🚀 NasirPy
 
-[![GitHub release](https://img.shields.io/github/v/release/yourusername/nasirpy?include_prereleases&style=flat-square)](https://github.com/yourusername/nasirpy/releases)
-[![License](https://img.shields.io/github/license/yourusername/nasirpy?style=flat-square)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/itx-nasir/nasirpy?include_prereleases&style=flat-square)](https://github.com/itx-nasir/nasirpy/releases)
+[![License](https://img.shields.io/github/license/itx-nasir/nasirpy?style=flat-square)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-blue?style=flat-square)](https://www.python.org/downloads/)
 
 > 🎓 A learning-focused Python web framework built from scratch to understand how web frameworks work under the hood.
@@ -82,8 +82,19 @@ This framework is accompanied by detailed explanations of:
 
 ### Installation
 
+Since this is a learning project, you can install it directly from GitHub:
+
 ```bash
-pip install nasirpy
+# Install latest version from main branch
+pip install git+https://github.com/itx-nasir/nasirpy.git
+
+# Install a specific release version
+pip install git+https://github.com/itx-nasir/nasirpy.git@v0.1.0
+
+# Install in development mode (if you want to modify the code)
+git clone https://github.com/itx-nasir/nasirpy.git
+cd nasirpy
+pip install -e .
 ```
 
 ### Basic Usage
@@ -134,8 +145,8 @@ If you found this educational project helpful, please give it a star! ⭐️
 ## 📫 Contact
 
 Have questions about how something works?
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@itx-nasir](https://github.com/itx-nasir)
+- Email: Nasir.Iqbal.Dev@gmail.com
 
 ---
 
