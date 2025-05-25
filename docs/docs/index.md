@@ -32,15 +32,11 @@ NasirPy was created with the goal of deeply understanding how Python web framewo
 
     Learn how web servers handle HTTP requests and responses at the protocol level.
 
-    [:octicons-arrow-right-24: Learn more](concepts/architecture.md)
-
 -   :material-router: **Routing Mechanisms**
 
     ---
 
     Understand URL pattern matching, parameter extraction, and route registration.
-
-    [:octicons-arrow-right-24: Explore routing](concepts/routing.md)
 
 -   :material-layers: **Middleware Architecture**
 
@@ -48,15 +44,11 @@ NasirPy was created with the goal of deeply understanding how Python web framewo
 
     Discover how middleware chains process requests and responses.
 
-    [:octicons-arrow-right-24: Middleware guide](concepts/middleware.md)
-
 -   :material-sync: **ASGI/WSGI Concepts**
 
     ---
 
     Compare synchronous and asynchronous web server interfaces.
-
-    [:octicons-arrow-right-24: ASGI vs WSGI](learning/asgi-wsgi.md)
 
 </div>
 
@@ -129,11 +121,15 @@ pip install -e .
 
     Installation, quick start, and your first application
 
+    [:octicons-arrow-right-24: Get Started](getting-started/installation.md)
+
 -   **Core Concepts**
 
     ---
 
     Deep dive into framework architecture and design patterns
+
+    *Coming soon - Core concepts documentation*
 
 -   **API Reference**
 
@@ -141,17 +137,15 @@ pip install -e .
 
     Complete reference for all classes and methods
 
+    *Coming soon - API reference documentation*
+
 -   **Examples**
 
     ---
 
     Real-world applications and use cases
 
--   **Learning Path**
-
-    ---
-
-    Educational content about web framework internals
+    *Coming soon - Example applications*
 
 </div>
 
@@ -164,7 +158,7 @@ This is an educational project! Contributions are welcome:
 - 💡 **Examples** - Share your educational use cases
 - 🎓 **Learning Content** - Add tutorials and explanations
 
-[Contributing Guide](contributing.md){ .md-button }
+[View Repository](https://github.com/itx-nasir/nasirpy){ .md-button }
 
 ## 📄 License
 
